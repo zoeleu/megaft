@@ -1,0 +1,4 @@
+[D-BUS Service]
+Name=br.dev.zoe.MegaFt1
+Exec=/bin/false
+SystemdService=megaftd.service

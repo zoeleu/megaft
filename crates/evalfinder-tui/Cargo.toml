@@ -1,0 +1,31 @@
+[package]
+name = "evalfinder-tui"
+description = "evalfinder: ratatui TUI and headless CLI for booking 42 evaluations"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[[bin]]
+name = "evalfinder"
+path = "src/main.rs"
+
+[dependencies]
+megaft-core.workspace = true
+megaft-browser.workspace = true
+evalfinder-app.workspace = true
+ratatui.workspace = true
+crossterm.workspace = true
+futures.workspace = true
+secrecy.workspace = true
+anyhow.workspace = true
+clap.workspace = true
+jiff.workspace = true
+tokio.workspace = true
+tokio-util.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true
+
+[lints]
+workspace = true

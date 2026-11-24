@@ -1,0 +1,23 @@
+[package]
+name = "evalfinder-gui"
+description = "evalfinder: GPUI desktop app for booking 42 evaluations"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+evalfinder-app.workspace = true
+megaft-core.workspace = true
+gpui.workspace = true
+gpui-component.workspace = true
+gpui_platform.workspace = true
+anyhow.workspace = true
+jiff.workspace = true
+tokio.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true
+
+[lints]
+workspace = true

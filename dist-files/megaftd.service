@@ -1,0 +1,15 @@
+[Unit]
+Description=megaft background service (42 evaluations, GNOME extension backend)
+Documentation=file://%h/projects/megaft/PLAN.md
+After=graphical-session.target
+
+[Service]
+Type=dbus
+BusName=br.dev.zoe.MegaFt1
+ExecStart=%h/.local/bin/megaftd
+NotifyAccess=main
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target

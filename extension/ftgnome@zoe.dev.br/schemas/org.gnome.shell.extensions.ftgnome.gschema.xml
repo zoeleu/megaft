@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.ftgnome" path="/org/gnome/shell/extensions/ftgnome/">
+    <key name="server-url" type="s">
+      <default>'http://localhost:3000'</default>
+      <summary>ft_gnome server URL</summary>
+      <description>Base URL of the ft_gnome server. Must be https://, except for localhost.</description>
+    </key>
+    <key name="device-name" type="s">
+      <default>''</default>
+      <summary>Device name</summary>
+      <description>Name this computer is registered under. Empty uses the host name.</description>
+    </key>
+    <key name="refresh-interval" type="u">
+      <range min="60" max="3600"/>
+      <default>300</default>
+      <summary>Refresh interval (seconds)</summary>
+      <description>How often to refresh data from the server.</description>
+    </key>
+    <key name="show-logtime" type="b">
+      <default>true</default>
+      <summary>Show today's logtime in the panel</summary>
+      <description>Show today's logtime next to the icon.</description>
+    </key>
+    <key name="show-week" type="b">
+      <default>true</default>
+      <summary>Show this week's logtime in the panel</summary>
+      <description>Show the total logtime since Monday next to the icon.</description>
+    </key>
+    <key name="show-next-eval" type="b">
+      <default>true</default>
+      <summary>Show the next evaluation in the panel</summary>
+      <description>Show the time of the next evaluation next to the icon.</description>
+    </key>
+  </schema>
+</schemalist>

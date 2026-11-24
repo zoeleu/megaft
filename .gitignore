@@ -1,0 +1,7 @@
+# Build output lives on sgoinfre; ./target is a symlink made by `make bootstrap`.
+/target
+/dist/
+server/node_modules/
+server/data/
+server/.env
+__pycache__/

@@ -1,0 +1,19 @@
+{
+  "name": "ft-gnome-server",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun run --hot src/index.ts",
+    "start": "NODE_ENV=production bun run src/index.ts",
+    "test": "bun test",
+    "typecheck": "tsc --noEmit",
+    "gen-key": "bun -e \"console.log(Buffer.from(crypto.getRandomValues(new Uint8Array(32))).toString('base64'))\""
+  },
+  "dependencies": {
+    "hono": "4"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.4.4",
+    "typescript": "^7.0.2"
+  }
+}

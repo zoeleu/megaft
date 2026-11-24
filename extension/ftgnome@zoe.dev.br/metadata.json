@@ -1,0 +1,10 @@
+{
+  "uuid": "ftgnome@zoe.dev.br",
+  "name": "ft_gnome",
+  "description": "Your 42 logtime and upcoming evaluations in the top bar. Signs in through the ft_gnome server (captcha + 42 OAuth), so no 42 secrets are stored on this computer, and each computer can be revoked from the web dashboard.",
+  "shell-version": ["42"],
+  "version": 1,
+  "url": "https://github.com/zoeleu/ft_gnome",
+  "settings-schema": "org.gnome.shell.extensions.ftgnome",
+  "gettext-domain": "ftgnome"
+}

@@ -1,0 +1,87 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN"
+ "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<!--
+  megaftd D-Bus API, version 1. Single source of truth:
+  - megaftd's objects are checked against this file in its tests;
+  - the client proxies in megaft-proto mirror it;
+  - the GNOME extension loads a copy (extension/ftgnome@zoe.dev.br/dbus/megaft1.xml, kept identical by a test).
+  Bus name: br.dev.zoe.MegaFt1 (session bus). Times are Unix seconds.
+-->
+<node>
+  <!-- /br/dev/zoe/MegaFt1 -->
+  <interface name="br.dev.zoe.MegaFt1.Session">
+    <!-- Logs in with Chrome using login + password (kept in the daemon's memory only). Returns the login. -->
+    <method name="Login">
+      <arg name="login" type="s" direction="in"/>
+      <arg name="password" type="s" direction="in"/>
+      <arg name="who" type="s" direction="out"/>
+    </method>
+    <!-- Opens a visible Chrome window to log in by hand (e.g. 2FA). -->
+    <method name="LoginInteractive">
+      <arg name="who" type="s" direction="out"/>
+    </method>
+    <!-- Checks the saved session (refreshing it headlessly if needed). -->
+    <method name="UseSavedSession">
+      <arg name="who" type="s" direction="out"/>
+    </method>
+    <!-- Forgets the password and the saved session. -->
+    <method name="Logout"/>
+    <!-- "logged-out" | "logging-in" | "ready" | "expired" -->
+    <property name="State" type="s" access="read"/>
+    <property name="Who" type="s" access="read"/>
+  </interface>
+
+  <interface name="br.dev.zoe.MegaFt1.Evaluations">
+    <!-- Projects with an open team: (slug, name, status). -->
+    <method name="OpenProjects">
+      <arg name="projects" type="a(sss)" direction="out"/>
+    </method>
+    <!-- Start times of evaluations already booked for you on a project. -->
+    <method name="Upcoming">
+      <arg name="slug" type="s" direction="in"/>
+      <arg name="starts" type="ax" direction="out"/>
+    </method>
+    <!-- Starts a booking job. Fails if one is already running for the project. -->
+    <method name="CreateJob">
+      <arg name="slug" type="s" direction="in"/>
+      <arg name="count" type="u" direction="in"/>
+      <arg name="deadline" type="x" direction="in"/>
+      <arg name="buffer_minutes" type="u" direction="in"/>
+      <arg name="dry_run" type="b" direction="in"/>
+      <arg name="job" type="o" direction="out"/>
+    </method>
+    <method name="ListJobs">
+      <arg name="jobs" type="ao" direction="out"/>
+    </method>
+    <signal name="JobAdded">
+      <arg name="job" type="o"/>
+    </signal>
+    <signal name="JobRemoved">
+      <arg name="job" type="o"/>
+    </signal>
+  </interface>
+
+  <!-- /br/dev/zoe/MegaFt1/jobs/<n> -->
+  <interface name="br.dev.zoe.MegaFt1.Job">
+    <method name="Cancel"/>
+    <!-- Removes a finished job from the list. -->
+    <method name="Dismiss"/>
+    <!-- "running" | "done" | "deadline" | "cancelled" | "error" -->
+    <property name="State" type="s" access="read"/>
+    <property name="Project" type="s" access="read"/>
+    <property name="Count" type="u" access="read"/>
+    <property name="Deadline" type="x" access="read"/>
+    <property name="DryRun" type="b" access="read"/>
+    <!-- Booked (or, in a dry run, found) evaluations: (start, end). -->
+    <property name="Booked" type="a(xx)" access="read"/>
+    <property name="LastLog" type="s" access="read"/>
+    <signal name="Log">
+      <arg name="time" type="x"/>
+      <arg name="line" type="s"/>
+    </signal>
+    <signal name="Booked">
+      <arg name="start" type="x"/>
+      <arg name="end" type="x"/>
+    </signal>
+  </interface>
+</node>

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=evalfinder
+Comment=Find and book 42 evaluation slots
+Exec=evalfinder-gui
+Icon=x-office-calendar
+Categories=Utility;Education;
+Terminal=false

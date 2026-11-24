@@ -1,0 +1,130 @@
+[workspace]
+resolver = "3"
+members = [
+    "crates/megaft-core",
+    "crates/megaft-browser",
+    "crates/megaft-proto",
+    "crates/megaftd",
+    "crates/evalfinder-app",
+    "crates/evalfinder-gui",
+    "crates/evalfinder-tui",
+]
+default-members = [
+    "crates/megaft-core",
+    "crates/megaft-browser",
+    "crates/megaft-proto",
+    "crates/megaftd",
+    "crates/evalfinder-app",
+    "crates/evalfinder-tui",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.100"
+license = "MIT"
+publish = false
+
+[workspace.dependencies]
+megaft-core = { path = "crates/megaft-core" }
+megaft-browser = { path = "crates/megaft-browser" }
+megaft-proto = { path = "crates/megaft-proto" }
+evalfinder-app = { path = "crates/evalfinder-app" }
+
+anyhow = "1.0.105"
+thiserror = "2.0.21"
+tokio = { version = "1.54.1", features = ["rt-multi-thread", "macros", "time", "sync", "signal", "fs"] }
+tokio-util = "0.7.20"
+futures = "0.3.34"
+reqwest = { version = "0.13.5", default-features = false, features = ["rustls", "http2", "charset", "cookies", "json", "form", "query", "gzip"] }
+cookie_store = "0.22.1"
+reqwest_cookie_store = "0.10.0"
+scraper = "0.29.0"
+time = "0.3"
+url = "2"
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = "1.0.154"
+jiff = { version = "1.0.2", features = ["serde"] }
+secrecy = "0.10.3"
+tracing = "0.1.44"
+tracing-subscriber = { version = "0.3.23", features = ["env-filter"] }
+tracing-journald = "0.3.2"
+clap = { version = "4.6.9", features = ["derive"] }
+zbus = { version = "6.5.0", features = ["p2p", "tokio"] }
+zbus_xml = "6.0.0"
+sd-notify = "0.5.0"
+chromiumoxide = { version = "0.9.1", default-features = false }
+ratatui = "0.30.2"
+crossterm = { version = "0.29.0", features = ["event-stream"] }
+proptest = "1.12.0"
+rand = "0.9"
+tempfile = "3"
+# gpui-component 0.11 is built against this pre-release of GPUI; both are pinned exactly.
+gpui = { package = "gpui-pre", version = "=0.3.14" }
+gpui-component = "=0.11.0"
+gpui_platform = { package = "gpui-pre-platform", version = "=0.3.14", default-features = false, features = ["x11", "wayland", "font-kit"] }
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+missing_debug_implementations = "warn"
+unused_qualifications = "warn"
+
+# https://emschwartz.me/your-clippy-config-should-be-stricter/ — checked with `-D warnings`.
+[workspace.lints.clippy]
+# Don't panic
+string_slice = "warn"
+indexing_slicing = "warn"
+unwrap_used = "warn"
+expect_used = "warn"
+panic = "warn"
+todo = "warn"
+unimplemented = "warn"
+unreachable = "warn"
+get_unwrap = "warn"
+unwrap_in_result = "warn"
+unchecked_time_subtraction = "warn"
+panic_in_result_fn = "warn"
+# Don't fail silently
+let_underscore_future = "warn"
+let_underscore_must_use = "warn"
+unused_result_ok = "warn"
+map_err_ignore = "warn"
+assertions_on_result_states = "warn"
+# Async
+await_holding_lock = "warn"
+await_holding_refcell_ref = "warn"
+if_let_mutex = "warn"
+large_futures = "warn"
+# Memory / unsafe (tripwires: unsafe_code is forbidden)
+mem_forget = "warn"
+undocumented_unsafe_blocks = "warn"
+multiple_unsafe_ops_per_block = "warn"
+unnecessary_safety_doc = "warn"
+unnecessary_safety_comment = "warn"
+# Numbers
+float_cmp = "warn"
+float_cmp_const = "warn"
+lossy_float_literal = "warn"
+cast_sign_loss = "warn"
+invalid_upcast_comparisons = "warn"
+# Easy to avoid
+rc_mutex = "warn"
+debug_assert_with_mut_call = "warn"
+iter_not_returning_iterator = "warn"
+expl_impl_clone_on_copy = "warn"
+infallible_try_from = "warn"
+dbg_macro = "warn"
+# No silent escape hatches: #[expect(lint, reason = "...")] only
+allow_attributes = "warn"
+allow_attributes_without_reason = "warn"
+
+[profile.dev]
+debug = "line-tables-only"   # smaller target dir on NFS
+
+[profile.dev.package."*"]
+debug = false
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = true
